@@ -1,3 +1,12 @@
+/* general tags */
 p{
     display:inline;
+}
+/* rank card */
+.users_rank{
+    height:5cm;
+    overflow-y:scroll;
+}
+.card-footer{
+    gap:5px;
 }
