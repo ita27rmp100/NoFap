@@ -15,8 +15,7 @@ function toogleMood(){
     // replaced one
     $(`#${moods[indexMode]}`).addClass('btn-dark')
     $(`#${moods[indexMode]}`).removeClass('btn-light')
-    document.title = `NoFap | ${moods[indexMode].replace("i","I") || moods[indexMode].replace("u","U")}`
-    
+    document.title = `NoFap | ${moods[indexMode].toUpperCase()}`
 }
 htmlForm()
 // edit on navbar according to title
