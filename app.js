@@ -4,7 +4,8 @@ let express = require('express');
 let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
-const mysql = require("mysql")
+const mysql = require("mysql");
+const qs = require("querystring")
 const session = require("express-session")
 // routes require
 let indexRouter = require('./routes/index');
@@ -34,34 +35,36 @@ function gettingUsers(){
 gettingUsers()
 // login & signup
   // SignUp
-app.post('/sign-up',(req,res)=>{
+app.post('/logsign/signup',(req,res)=>{
   let body = ''
   req.on('data',(data)=>{
       body = body + data
   })
   req.on('end',()=>{
       let result = qs.parse(body)
-      gettingUsers()
-      if (result.password==result.ConfirmPassword && !(result.username in usersList)) {
-        Connection.query(`insert into users(username, password) value('${result.username}','${result.password}')`)
-        Connection.query(`create table ${result.username}(date varchar(11),message varchar(1000))`)
-        req.session.login = true
-        req.session.username = result.username
-        res.redirect('/')
-        gettingUsers()
-      }
-      else{
-        if(result.username in usersList){
-          res.status(400).send('Something happend wrong , you may wanted to sign up with a taken username')
+      console.log("The list nta3 form : ")
+      console.log(result)
+      connection.query(`select * from db_ws where username = '${result.username}`,(error,results,fields)=>{
+        if(results == undefined && result.password_sign==result.ConfirmPassword){
+          let date = new Date()
+          let start_count = `${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`
+          connection.query(`
+            insert into db_ws()
+            value('${result.username_sign}','${result.password_sign}','${start_count}','0 Days, 0 Hours',1)`,
+            (error,RES,fields)=>{
+              req.session.login = true
+              res.redirect('/')
+            }
+          )
         }
-        else if(result.password!=result.ConfirmPassword){
-          res.redirect('/sign-up')
+        else{
+          res.send("Error")
         }
-      }
+      })
   })
 })
   // log in
-app.post('/log-in',(req,res)=>{
+app.post('/logsign/log-in',(req,res)=>{
   gettingUsers()
   let body = '' , password
   req.on('data',(data)=>{
@@ -69,10 +72,10 @@ app.post('/log-in',(req,res)=>{
   })
   req.on('end',()=>{
     let result = qs.parse(body) , errorOrder = 'try log-in into this website again please .'
+    connection.query
     if(result.username in usersList){
       if(result.password == usersList[result.username]){
         req.session.login = true
-        req.session.username = result.username
         res.redirect('/')
       }else{
         res.status(400).send('Your password is incorrect , ' + errorOrder);
