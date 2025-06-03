@@ -1,14 +1,39 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+// needed packages
+let createError = require('http-errors');
+let express = require('express');
+let path = require('path');
+let cookieParser = require('cookie-parser');
+let logger = require('morgan');
+const mysql = require("mysql")
+const session = require("express-session")
+// routes require
+let indexRouter = require('./routes/index');
+let usersRouter = require('./routes/users');
+let LoginSignupRouter = require('./routes/login_signup');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var LoginSignupRouter = require('./routes/login_signup');
+let app = express();
 
-var app = express();
+// DB connection & GET users list
+let connection = mysql.createConnection({
+  host:"127.0.0.1",
+  user:"root",
+  password:"",
+  database:"nofap"
+})
+
+var usersList = {}, usernames , passowrds 
+function gettingUsers(){
+  Connection.query('select * from db_ws',function(error,results,fields) {
+  usernames = results.map(row => row.username)
+  passowrds = results.map(row => row.password)
+  for(i=0;i<(Object.keys(usernames).length);i++){
+    usersList[usernames[i]]=passowrds[i]
+  }
+})
+}
+gettingUsers()
+// login & signup
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
