@@ -4,18 +4,19 @@ let moods = ['login','signup'] , display = ['none','block'] , indexMode = 0
 
 function htmlForm(){
     $(".sign").css('display',display[indexMode])
-    $(".log").css('display',display[Math.abs(indexMode-1)])
+    $(".log").css('display',display[1-indexMode])
 }
 function toogleMood(){
+    indexMode = 1-indexMode
+    htmlForm()
     // chosen
-    $(`#${moods[Math.abs(indexMode)-1]}`).addClass('btn-light')
-    $(`#${moods[Math.abs(indexMode)-1]}`).removeClass('btn-dark')
+    $(`#${moods[1-indexMode]}`).addClass('btn-light')
+    $(`#${moods[1-indexMode]}`).removeClass('btn-dark')
     // replaced one
     $(`#${moods[indexMode]}`).addClass('btn-dark')
     $(`#${moods[indexMode]}`).removeClass('btn-light')
     document.title = `NoFap | ${moods[indexMode].replace("i","I") || moods[indexMode].replace("u","U")}`
-    indexMode = Math.abs(indexMode-1)
-    htmlForm()
+    
 }
 htmlForm()
 // edit on navbar according to title
