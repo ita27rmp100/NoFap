@@ -10,11 +10,9 @@ function toogleMood(){
     indexMode = 1-indexMode
     htmlForm()
     // chosen
-    $(`#${moods[1-indexMode]}`).addClass('btn-light')
-    $(`#${moods[1-indexMode]}`).removeClass('btn-dark')
+    $(`#${moods[1-indexMode]}`).addClass('btn-light').removeClass('btn-dark')
     // replaced one
-    $(`#${moods[indexMode]}`).addClass('btn-dark')
-    $(`#${moods[indexMode]}`).removeClass('btn-light')
+    $(`#${moods[indexMode]}`).addClass('btn-dark').removeClass('btn-light')
     document.title = `NoFap | ${moods[indexMode].toUpperCase()}`
 }
 htmlForm()

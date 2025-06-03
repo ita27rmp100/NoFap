@@ -21,11 +21,15 @@
     </nav>
     <!-- Counter -->
     <nav>
-        <div class="card p-2 m-2">
+        <div class="card p-2 m-2 counter-card">
             <div class="card-body d-inline-block text-muted">
-                <h2 class="card-text d-inline">51 Days , 20 hours</h2> + <small class="font-weight-bold">49:34.98</small>
+                <h2 class="card-text d-inline counter">51 Days , 20 hours</h2>
             </div>
-            <div class="card-header px-4 pb-4 d-flex justify-content-between align-items-center flex-row">
+            <div class="card-header px-4 pb-4 d-flex justify-content-between align-items-center flex-row flex-wrap">
+                <small>
+                    <b>started on :</b> 
+                    <p class="start">03/06/2025</p>   
+                </small>
                 <small>
                     <b>Your Best Record:</b> 
                     <p>52 days</p>   
@@ -105,5 +109,9 @@
             </div>
         </div>
     </nav>
+    <!-- scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="counter.js"></script>
 </body>
 </html>
