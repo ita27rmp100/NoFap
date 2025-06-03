@@ -1,8 +1,30 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+/* general tags */
+*{
+    font-family: "Parkinsans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: normal;
+    font-style: normal;
+    transition: all 500ms;
 }
-
-a {
-  color: #00B7FF;
+p{
+    display:inline;
+}
+/* rank card */
+.users_rank{
+    height:5cm;
+    overflow-y:scroll;
+    scrollbar-width: thin;
+    scrollbar-color: #555 #eee;
+}
+.card-footer{
+    gap:5px;
+}
+/* LogIn || SignUp page */
+/* the navbar */
+.navbar{
+    margin:0px;
+}
+/* login/signup part */
+.content{
+    max-width:500px;
 }
