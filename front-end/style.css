@@ -1,4 +1,10 @@
 /* general tags */
+*{
+    font-family: "Parkinsans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
+}
 p{
     display:inline;
 }
@@ -6,6 +12,8 @@ p{
 .users_rank{
     height:5cm;
     overflow-y:scroll;
+    scrollbar-width: thin;
+    scrollbar-color: #555 #eee;
 }
 .card-footer{
     gap:5px;
