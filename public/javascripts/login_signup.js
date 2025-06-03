@@ -5,6 +5,7 @@ let moods = ['login','signup'] , display = ['none','block'] , indexMode = 0
 function htmlForm(){
     $(".sign").css('display',display[indexMode])
     $(".log").css('display',display[1-indexMode])
+    $("form").attr("action",`/logsign/${moods[indexMode]}`)
 }
 function toogleMood(){
     indexMode = 1-indexMode
