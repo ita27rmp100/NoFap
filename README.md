@@ -1,7 +1,7 @@
 # NoFap website :
 
 ## Overview
-    NoFap is a minimal web app that allows you to monitor your progress in the no-fap challenge. Each day, you can increment your streak counter and see how you rank compared to others participating in the challenge. The app focuses on simplicity and motivation, with no local storage or complex features.
+NoFap is a minimal web app that allows you to monitor your progress in the no-fap challenge. Each day, you can increment your streak counter and see how you rank compared to others participating in the challenge. The app focuses on simplicity and motivation, with no local storage or complex features.
 
 ## Features
 - Up-counter to log and display streak days
