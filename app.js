@@ -49,6 +49,7 @@ app.post('/logsign/signup',(req,res)=>{
             value('${result.username_sign}','${result.password_sign}','${start_count}','0 Days, 0 Hours',1)`,
             (error,RES,fields)=>{
               req.session.login = true
+              req.session.username = username_sign
               res.redirect('/')
             }
           )
@@ -72,6 +73,7 @@ app.post('/logsign/log-in',(req,res)=>{
       (err,results,fields)=>{
         if(results != undefined && results[0].password == result.password_login){
           req.session.login = true
+          req.session.username = username_login
           res.redirect('/')
         }
         else{
@@ -88,7 +90,15 @@ app.post('/logsign',(req,res)=>{
   req.session.login = false
   res.redirect('/logsign')
 })
-
+// Again (inc attempt)
+app.post("/",(req,res)=>{
+  this.connection.query(`
+    UPDATE db_table SET average = average + 1 WHERE name = '${req.session.username}'`,
+    (err,result,fields)=>{
+      res.redirect('/')
+    }
+  )
+})
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
