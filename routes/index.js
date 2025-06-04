@@ -30,7 +30,8 @@ router.get('/', function(req, res, next) {
           .sort((a, b) => {
             const [ad, am, ay] = String(a.start_count).split('/');
             const [bd, bm, by] = String(b.start_count).split('/');
-            return new Date(`${bm}/${bd}/${by}`) - new Date(`${am}/${ad}/${ay}`);
+            // Sort from higher to lower (most recent to oldest)
+            return new Date(`${am}/${ad}/${ay}`) - new Date(`${bm}/${bd}/${by}`);
           })
           .map((user, i) => {
             const [d, m, y] = String(user.start_count).split('/');
