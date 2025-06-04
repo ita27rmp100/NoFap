@@ -14,7 +14,7 @@ let connection = mysql.createConnection({
 router.get('/', function(req, res, next) {
   if(req.session.login){
     // Get all users ordered by streak days (assuming 'streak_days' column exists)
-    connection.query(`SELECT username, streak_days FROM db_ws ORDER BY streak_days DESC`, (err, users) => {
+    connection.query(`SELECT username, start_count FROM db_ws ORDER BY start_count asc`, (err, users) => {
       if (err) {
       return next(err);
       }
@@ -25,15 +25,29 @@ router.get('/', function(req, res, next) {
       }
       if (results.length > 0) {
         // Prepare leaderboard object
-        const leaderboard = users.map((user) => ({
-                              username: user.username,
-                              streak_days: user.streak_days
-                          }));
+        // Sort users by start_count (date) descending
+        const leaderboard = users
+          .sort((a, b) => {
+            const [ad, am, ay] = String(a.start_count).split('/');
+            const [bd, bm, by] = String(b.start_count).split('/');
+            return new Date(`${bm}/${bd}/${by}`) - new Date(`${am}/${ad}/${ay}`);
+          })
+          .map((user, i) => {
+            const [d, m, y] = String(user.start_count).split('/');
+            const days = Math.floor((new Date() - new Date(`${m}/${d}/${y}`)) / (1000 * 60 * 60 * 24));
+            return `<tr class="${user.username == req.session.username ? 'table-success' : ''}">
+              <td>${i + 1}</td>
+              <td>${user.username}</td>
+              <td>${days}</td>
+            </tr>`;
+          });
+
+        const table = leaderboard.join('');
         res.render('index', {
           attempt_no: results[0].attempt_no,
           max: results[0].max,
           start_count: results[0].start_count,
-          leaderboard
+          table
         });
       }
       return;
