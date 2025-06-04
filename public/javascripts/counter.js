@@ -21,9 +21,8 @@ $(document).ready(function () {
             }
 
             const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
-            counterDisplay.text(`${days} Days , ${hours} hours`);
-        }, 1000); // update every second
+            counterDisplay.text(`${days} Days`);
+        }, 60000);
     });
 });

@@ -42,7 +42,7 @@ app.post('/logsign/signup',(req,res)=>{
         if(results == undefined && result.password_sign==result.ConfirmPassword){
           connection.query(`
             insert into db_ws()
-            value('${result.username_sign}','${result.password_sign}','${result.start_day.replaceAll("-",'/')}','0 Days, 0 Hours',1)`,
+            value('${result.username_sign}','${result.password_sign}','${result.start_day.replaceAll("-",'/')}','0 Days',1)`,
             (error,RES,fields)=>{
               req.session.login = true
               req.session.username = result.username_sign
