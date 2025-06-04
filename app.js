@@ -38,18 +38,14 @@ app.post('/logsign/signup',(req,res)=>{
   })
   req.on('end',()=>{
       let result = qs.parse(body)
-      console.log("The list nta3 form : ")
-      console.log(result)
-      connection.query(`select * from db_ws where username = '${result.username}`,(error,results,fields)=>{
+      connection.query(`select * from db_ws where username = '${result.username}'`,(error,results,fields)=>{
         if(results == undefined && result.password_sign==result.ConfirmPassword){
-          let date = new Date()
-          let start_count = `${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`
           connection.query(`
             insert into db_ws()
-            value('${result.username_sign}','${result.password_sign}','${start_count}','0 Days, 0 Hours',1)`,
+            value('${result.username_sign}','${result.password_sign}','${result.start_day.replaceAll("-",'/')}','0 Days, 0 Hours',1)`,
             (error,RES,fields)=>{
               req.session.login = true
-              req.session.username = username_sign
+              req.session.username = result.username_sign
               res.redirect('/')
             }
           )
@@ -61,7 +57,7 @@ app.post('/logsign/signup',(req,res)=>{
   })
 })
   // log in
-app.post('/logsign/log-in',(req,res)=>{
+app.post('/logsign/login',(req,res)=>{
   let body = ''
   req.on('data',(data)=>{
     body = body + data
@@ -69,11 +65,11 @@ app.post('/logsign/log-in',(req,res)=>{
   req.on('end',()=>{
     let result = qs.parse(body)
     connection.query(
-      `select passowrd from db_ws where username=${result.username_login}`,
+      `select * from db_ws where username='${result.username_login}'`,
       (err,results,fields)=>{
         if(results != undefined && results[0].password == result.password_login){
           req.session.login = true
-          req.session.username = username_login
+          req.session.username = result.username_login
           res.redirect('/')
         }
         else{
@@ -92,8 +88,8 @@ app.post('/logsign',(req,res)=>{
 })
 // Again (inc attempt)
 app.post("/",(req,res)=>{
-  this.connection.query(`
-    UPDATE db_table SET average = average + 1 WHERE name = '${req.session.username}'`,
+  connection.query(
+    `UPDATE db_ws SET attempt_no=attempt_no+1 WHERE username='${req.session.username}'`,
     (err,result,fields)=>{
       res.redirect('/')
     }
