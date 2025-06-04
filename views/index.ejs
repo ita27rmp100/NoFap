@@ -18,15 +18,17 @@
             <div class="card-header px-4 pb-4 d-flex justify-content-between align-items-center flex-row flex-wrap">
                 <small>
                     <b>started on :</b> 
-                    <p class="start">03/5/2025</p>   
+                    <p class="start"><%=start_count%></p>   
                 </small>
                 <small>
                     <b>Your Best Record:</b> 
-                    <p>52 days</p>   
+                    <p>
+                      <%=max %>
+                    </p>   
                 </small>
                 <small>
                     <b>Attempt No:</b>    
-                    <p>2</p>
+                    <p><%= attempt_no %></p>
                 </small>
             </div>
         </div>
