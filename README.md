@@ -1,14 +1,14 @@
 # NoFap website :
 
 ## Overview
-    **NoFap** is a minimal web app that allows you to monitor your progress in the no-fap challenge. Each day, you can increment your streak counter and see how you rank compared to others participating in the challenge. The app focuses on simplicity and motivation, with no local storage or complex features.
+    NoFap is a minimal web app that allows you to monitor your progress in the no-fap challenge. Each day, you can increment your streak counter and see how you rank compared to others participating in the challenge. The app focuses on simplicity and motivation, with no local storage or complex features.
 
 ## Features
 - Up-counter to log and display streak days
 - View your rank among all participants
 - Clean, distraction-free interface
 ## Project Structure
-
+```
 NoFap/
 ├── bin/
 │   └── www
@@ -33,6 +33,7 @@ NoFap/
 ├── database.sql
 ├── app.js
 └── README.md
+```
 
 ## Getting Started
 
@@ -52,10 +53,7 @@ npm install
 npm start
 ```
 
-The app will be available in your device at [http://localhost:3000](http://localhost:3000).
-
-## License
-This project is licensed under the MIT License.
+> The app will be available in your device at [http://localhost:3000](http://localhost:3000).
 
 ## Support Me :
-[From Here : ] (https://ko-fi.com/ita27rmp100)
+<p><a href="https://ko-fi.com/ita27rmp100"> <img align="left" src="https://cdn.ko-fi.com/cdn/kofi3.png?v=3" height="50" width="210" alt="ita27rmp100" /></a></p><br><br>
