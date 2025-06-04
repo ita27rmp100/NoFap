@@ -14,6 +14,13 @@ let LoginSignupRouter = require('./routes/login_signup');
 
 let app = express();
 
+app.use(session({
+  secret: 'your_secret_key',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}));
+
 // DB connection & GET users list
 let connection = mysql.createConnection({
   host:"127.0.0.1",
@@ -22,17 +29,6 @@ let connection = mysql.createConnection({
   database:"nofap"
 })
 
-var usersList = {}, usernames , passowrds 
-function gettingUsers(){
-  connection.query('select * from db_ws',function(error,results,fields) {
-  usernames = results.map(row => row.username)
-  passowrds = results.map(row => row.password)
-  for(i=0;i<(Object.keys(usernames).length);i++){
-    usersList[usernames[i]]=passowrds[i]
-  }
-})
-}
-gettingUsers()
 // login & signup
   // SignUp
 app.post('/logsign/signup',(req,res)=>{
@@ -65,32 +61,32 @@ app.post('/logsign/signup',(req,res)=>{
 })
   // log in
 app.post('/logsign/log-in',(req,res)=>{
-  gettingUsers()
-  let body = '' , password
+  let body = ''
   req.on('data',(data)=>{
     body = body + data
   })
   req.on('end',()=>{
-    let result = qs.parse(body) , errorOrder = 'try log-in into this website again please .'
-    connection.query
-    if(result.username in usersList){
-      if(result.password == usersList[result.username]){
-        req.session.login = true
-        res.redirect('/')
-      }else{
-        res.status(400).send('Your password is incorrect , ' + errorOrder);
+    let result = qs.parse(body)
+    connection.query(
+      `select passowrd from db_ws where username=${result.username_login}`,
+      (err,results,fields)=>{
+        if(results != undefined && results[0].password == result.password_login){
+          req.session.login = true
+          res.redirect('/')
+        }
+        else{
+          if(results == undefined) res.send("ERROR: username doesn't exit")
+          else res.send("passowrd is wrong")
+        }
       }
-    }
-    else{
-      res.status(400).send('Your password is incorrect , ' + errorOrder);
-    }
+    )
   }
   )
 })
   // log out
-app.post('/',(req,res)=>{
+app.post('/logsign',(req,res)=>{
   req.session.login = false
-  res.redirect('/log-in')
+  res.redirect('/logsign')
 })
 
 // view engine setup
