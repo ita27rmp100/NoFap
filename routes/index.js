@@ -36,6 +36,14 @@ router.get('/', function(req, res, next) {
           .map((user, i) => {
             const [d, m, y] = String(user.start_count).split('/');
             const days = Math.floor((new Date() - new Date(`${m}/${d}/${y}`)) / (1000 * 60 * 60 * 24));
+            if(user.username == req.session.username && days >= parseInt(results[0].max)){
+              results[0].max = `${days} Days`
+              console.log(results[0].max)
+              connection.query(
+                `UPDATE db_ws SET max = ? WHERE username = ?`,
+                [results[0].max, req.session.username]
+              )
+            }
             return `<tr class="${user.username == req.session.username ? 'table-success' : ''}">
               <td>${i + 1}</td>
               <td>${user.username}</td>
